@@ -4,10 +4,10 @@ from langgraph.graph import (
     END
 )
 
-from state import RAGState
-from security import (get_user_groups)
-from search_service import (search_documents)
-from llm_service import (generate_answer)
+from .state import RAGState
+from .security import (get_user_groups)
+from .search_service import (search_documents)
+from .llm_service import (generate_answer)
 
 
 def authenticate_user(state: RAGState):

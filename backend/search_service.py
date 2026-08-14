@@ -3,7 +3,7 @@ from azure.search.documents.models import (VectorizedQuery)
 from azure.core.credentials import (AzureKeyCredential)
 from langchain_openai import (AzureOpenAIEmbeddings)
 
-from config import (
+from .config import (
     AZURE_SEARCH_ENDPOINT,
     AZURE_SEARCH_API_KEY,
     AZURE_SEARCH_INDEX,
@@ -11,7 +11,7 @@ from config import (
     AZURE_OPENAI_API_KEY,
     AZURE_OPENAI_EMBEDDING_DEPLOYMENT
 )
-from security import build_security_filter
+from .security import build_security_filter
 
 # ------------------------------------------------
 # Search client

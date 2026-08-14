@@ -1,4 +1,4 @@
-from graph import app
+from .graph import app
 
 
 def run():
