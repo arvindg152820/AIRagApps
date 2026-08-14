@@ -23,11 +23,12 @@ function App() {
   const [groups, setGroups] =
     useState([]);
 
-
+  const API_URL = import.meta.env.VITE_API_URL;
+  
   async function login() {
-
-    const response = await fetch(
-      "http://127.0.0.1:8000/login",
+    console.log("API_URL:", API_URL);
+    console.log("Login URL:", `${API_URL}/login`);
+    const response = await fetch(`${API_URL}/login`,
       {
         method: "POST",
 
@@ -45,10 +46,13 @@ function App() {
       }
     );
 
+    console.log("Status:", response.status);
+    const responseText = await response.text();
+    console.log("Response:", responseText);
 
     if (!response.ok) {
       alert(
-        "Invalid username or password"
+        `Login failed\nStatus: ${response.status}\nResponse: ${responseText}`
       );
 
       return;
@@ -74,7 +78,7 @@ function App() {
     );
 
     const response = await fetch(
-      "http://127.0.0.1:8000/ask",
+      `${API_URL}/ask`,
       {
         method: "POST",
         headers: {
