@@ -11,7 +11,7 @@ api = FastAPI(
 api.add_middleware(
     CORSMiddleware,
 
-    allow_origins=["http://localhost:4173/",
+    allow_origins=["http://localhost:5173",
         "https://secure-rag-api-evf2fmcdfugzhqfw.southindia-01.azurewebsites.net",
         "https://secure-rag-frontend-d4ewdbeehjbkfrfq.southindia-01.azurewebsites.net"
     ],

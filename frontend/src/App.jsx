@@ -26,46 +26,43 @@ function App() {
   const API_URL = import.meta.env.VITE_API_URL;
   
   async function login() {
+  try {
     console.log("API_URL:", API_URL);
     console.log("Login URL:", `${API_URL}/login`);
-    const response = await fetch(`${API_URL}/login`,
-      {
-        method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+    const response = await fetch(`${API_URL}/login`, {
+      method: "POST",
 
-        body: JSON.stringify({
-          username:
-            username,
-          password:
-            password
-        })
-      }
-    );
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-    console.log("Status:", response.status);
-    const responseText = await response.text();
-    console.log("Response:", responseText);
+      body: JSON.stringify({
+        username: username,
+        password: password
+      })
+    });
+
+    console.log("HTTP Status:", response.status);
+
+    // Read response body ONLY ONCE
+    const data = await response.json();
+
+    console.log("Backend response:", data);
 
     if (!response.ok) {
-      alert(
-        `Login failed\nStatus: ${response.status}\nResponse: ${responseText}`
-      );
-
+      alert(data.detail || "Invalid username or password");
       return;
     }
 
-
-    const data =
-      await response.json();
     setLoggedIn(true);
-    setGroups(
-      data.groups
-    );
+    setGroups(data.groups || []);
+
+  } catch (error) {
+    console.error("Login error:", error);
+    alert(`Login failed: ${error.message}`);
   }
+}
 
 
   async function askQuestion() {
