@@ -62,14 +62,6 @@ USERS = {
     }
 }
 
-
-@api.get("/")
-def root():
-    return {
-        "message": "Secure RAG API is running",
-        "environment": "UAT"
-    }
-
 @api.post("/login")
 def login(request: LoginRequest):
     user = USERS.get(
