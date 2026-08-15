@@ -62,10 +62,10 @@ USERS = {
     }
 }
 
-@api.get("/")
-def root():
+@api.get("/health")
+def health():
     return {
-        "message": "Secure RAG API is running",
+        "status": "healthy",
         "environment": "QA"
     }
 
