@@ -67,6 +67,7 @@ def health():
     return {
         "status": "healthy",
         "environment": "QA"
+    }
 
 @api.post("/login")
 def login(request: LoginRequest):
