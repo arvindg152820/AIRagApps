@@ -14,6 +14,8 @@ api.add_middleware(
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "https://secure-rag-frontend-d4ewdbeehjbkfrfq.southindia-01.azurewebsites.net",
+        "https://secure-rag-frontend-qa-gsdbfehhama2frch.southindia-01.azurewebsites.net",
+        "https://secure-rag-frontend-uat-bkf2f8fea2a8edf9.southindia-01.azurewebsites.net",
     ],
     allow_credentials=True,
     allow_methods=["*"],
