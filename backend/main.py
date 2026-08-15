@@ -62,6 +62,12 @@ USERS = {
     }
 }
 
+@api.get("/")
+def root():
+    return {
+        "message": "Secure RAG API is running",
+        "environment": "MAIN"
+    }
 
 @api.post("/login")
 def login(request: LoginRequest):
