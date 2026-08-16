@@ -2,7 +2,25 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from .graph import app
+from azure.identity import DefaultAzureCredential
+from azure.storage.blob import BlobServiceClient
+from fastapi import UploadFile, File, HTTPException
 import os
+
+
+STORAGE_ACCOUNT_NAME = "secureragstorage"
+CONTAINER_NAME = "documents-qa"
+
+credential = DefaultAzureCredential()
+
+blob_service_client = BlobServiceClient(
+    account_url=f"https://{STORAGE_ACCOUNT_NAME}.blob.core.windows.net",
+    credential=credential
+)
+
+container_client = blob_service_client.get_container_client(
+    CONTAINER_NAME
+)
 
 # Add by Arvind
 api = FastAPI(
@@ -125,3 +143,36 @@ def ask_question(request: QuestionRequest):
                 for d in result["documents"]
             ]
     }
+
+@api.post("/documents/upload")
+async def upload_document(file: UploadFile = File(...)):
+
+    if not file.filename.lower().endswith(".pdf"):
+        raise HTTPException(
+            status_code=400,
+            detail="Only PDF files are allowed"
+        )
+
+    try:
+        blob_client = container_client.get_blob_client(
+            file.filename
+        )
+
+        #contents = await file.read()
+
+        blob_client.upload_blob(
+            file.file,
+            overwrite=True
+        )
+
+        return {
+            "status": "success",
+            "filename": file.filename,
+            "container": CONTAINER_NAME
+        }
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
