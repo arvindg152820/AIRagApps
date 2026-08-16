@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from .graph import app
+import os
 
 # Add by Arvind
 api = FastAPI(
@@ -66,7 +67,7 @@ USERS = {
 def health():
     return {
         "status": "healthy",
-        "environment": "QA"
+        "environment": os.getenv("APP_ENV", "UNKNOWN")
     }
 
 @api.post("/login")
