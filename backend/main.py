@@ -144,6 +144,27 @@ def ask_question(request: QuestionRequest):
             ]
     }
 
+@api.get("/storage-test")
+def storage_test():
+
+    try:
+        token = credential.get_token(
+            "https://storage.azure.com/.default"
+        )
+
+        return {
+            "status": "success",
+            "message": "Storage token acquired successfully",
+            "token_length": len(token.token)
+        }
+
+    except Exception as e:
+
+        return {
+            "status": "failed",
+            "error": str(e)
+        }
+
 @api.post("/documents/upload")
 async def upload_document(file: UploadFile = File(...)):
 
