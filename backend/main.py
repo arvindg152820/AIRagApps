@@ -63,6 +63,13 @@ USERS = {
     }
 }
 
+@api.get("/health")
+def health():
+    return {
+        "status": "healthy",
+        "environment": os.getenv("APP_ENV", "UNKNOWN")
+    }
+
 @api.post("/login")
 def login(request: LoginRequest):
     user = USERS.get(
